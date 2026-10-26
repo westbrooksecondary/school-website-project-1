@@ -81,11 +81,11 @@ npm run dev
 
 The frontend is configured to deploy from the `main` branch with GitHub Actions. Push the repository to GitHub, then in the repository settings select **Pages** and set the build source to **GitHub Actions**. The site will be published at:
 
-https://rish100abh.github.io/school-website-project/
+https://westbrooksecondary.github.io/school-website-project-1/
 
 To enable login and API-backed forms on the published site, deploy `backend/demo` to an HTTPS-capable Java host and add a repository variable named `VITE_API_BASE_URL` under **Settings > Secrets and variables > Actions > Variables**. Set it to the backend API base URL, including `/api` (for example, `https://your-api-host.example/api`). The backend must allow the Pages site origin through CORS. GitHub Pages hosts only the frontend; without this backend, login and data submissions are unavailable.
 
-Configure the backend host with `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, and `CORS_ALLOWED_ORIGINS`. Use a new, long random JWT secret and set `CORS_ALLOWED_ORIGINS` to `https://rish100abh.github.io`. Never use the local development JWT fallback in production. The database credentials previously committed in this repository should be rotated immediately, because removing them from the current file does not remove them from Git history.
+Configure the backend host with `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, and `CORS_ALLOWED_ORIGINS`. Use a new, long random JWT secret and set `CORS_ALLOWED_ORIGINS` to `https://westbrooksecondary.github.io`. Never use the local development JWT fallback in production. The database credentials previously committed in this repository should be rotated immediately, because removing them from the current file does not remove them from Git history.
 
 ### Development Login Accounts
 

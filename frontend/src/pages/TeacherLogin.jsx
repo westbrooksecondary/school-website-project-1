@@ -164,12 +164,11 @@
 
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Lock, User, ArrowLeft } from 'lucide-react';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Button } from '../components/ui/button';
-import { authService } from '../services/api';
+import { authService, isApiConfigured } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'sonner';
 
@@ -194,18 +193,18 @@ const TeacherLogin = () => {
   // Handle login
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isApiConfigured) {
+      toast.error('Login is unavailable until a backend API URL is configured.');
+      return;
+    }
+
     setLoading(true);
 
     try {
       const response = await authService.login(credentials);
-
-      console.log("FULL RESPONSE:", response);
-      console.log("RESPONSE.DATA:", response.data);
-
-      // ✅ Handle multiple backend formats safely
       const userData = response.data?.data || response.data;
 
-      // ✅ Check token only (most reliable)
       if (userData?.token) {
         login(userData, userData.token);
 
@@ -215,13 +214,10 @@ const TeacherLogin = () => {
 
         navigate('/teacher/dashboard');
       } else {
-        console.log("FAILED RESPONSE:", response.data);
         toast.error(response.data?.message || 'Login failed');
       }
 
     } catch (error) {
-      console.log("ERROR:", error);
-
       toast.error(
         error.response?.data?.message ||
         error.message ||
@@ -328,11 +324,6 @@ const TeacherLogin = () => {
 
           </form>
 
-          {/* Demo */}
-          <div className="mt-6 text-center text-sm text-slate-600">
-            Demo: <br />
-            <strong>teacher1 / teacher123</strong>
-          </div>
         </div>
       </motion.div>
     </div>
